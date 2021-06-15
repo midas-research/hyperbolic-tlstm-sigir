@@ -127,17 +127,6 @@ f1_history = {"train": [], "val": []}
 
 
 since = time.time()
-best_loss = 9999999
-best_epoch = 0
-best_mcc = -1
-best_acc = 0
-best_f1 = -1
-best_mcc_when_acc = 0
-best_f1_when_acc = 0
-best_acc_when_mcc = 0
-best_f1_when_mcc = 0
-best_acc_when_f1 = 0
-best_mcc_when_f1 = 0
 
 if args.task == "movement":
     outdim = 2
@@ -260,27 +249,6 @@ for epoch in tqdm(range(args.num_epochs)):
 
         if args.task == "movement":
 
-          if phase == "val" and epoch_accuracy > best_acc:
-              best_acc = epoch_accuracy
-              best_epoch = epoch
-              best_mcc_when_acc = epoch_mcc
-              best_f1_when_acc = epoch_f1
-              best_loss = epoch_loss
-              best_model_wts_epoch = copy.deepcopy(model.state_dict())
-
-          if phase == "val" and epoch_mcc > best_mcc:
-              best_mcc = epoch_mcc
-              best_acc_when_mcc = epoch_accuracy
-              best_f1_when_mcc = epoch_f1
-              best_model_wts_mcc = copy.deepcopy(model.state_dict())
-          
-          if phase == "val" and epoch_f1 > best_f1:
-              best_f1 = epoch_f1
-              best_acc_when_f1 = epoch_accuracy
-              best_mcc_when_f1 = epoch_mcc
-              best_model_wts_f1 = copy.deepcopy(model.state_dict())
-              
-
           if phase == "val":
               torch.save(
                   {
@@ -301,19 +269,12 @@ for epoch in tqdm(range(args.num_epochs)):
 
         elif args.task == "volatility":
 
-          if phase == "val" and epoch_loss < best_loss:
-              best_loss = epoch_loss
-              best_epoch = epoch
-              best_model_wts = copy.deepcopy(model.state_dict())
-              
-
           if phase == "val":
               torch.save(
                   {
                       "model_wts": model.state_dict(),
                       "current_epoch": epoch,
                       "loss_history": loss_history,
-                      "best_model_wts": best_model_wts,
                       "args": args,
                   },
                   "../saved_models/" + str(args.name) + '_' + str(args.data) + '_'+ str(args.num_epochs) +'_'+ str(start_time) + ".pth",
