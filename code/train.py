@@ -96,17 +96,6 @@ valloader = torch.utils.data.DataLoader(
     valdata, batch_size=args.batch_size, shuffle=True, num_workers=8
 )
 
-
-if args.data == "stock":
-    testdata = FinCLData("../data/test_data.pkl")
-elif args.data == "china":
-    testdata = FinCLData("../data/test_data_chinese.pkl")
-
-if args.data == "stock":
-    testdata_1 = FinCLData("../data/testdata_stocknet_price.pkl")
-elif args.data == "china":
-    testdata_1 = FinCLData("../data/testdata_china_price.pkl")
-
 # print ('Train Data: ', len())
 
 dataloaders = {"train": trainloader, "val": valloader}
