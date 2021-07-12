@@ -160,7 +160,7 @@ model.to(device)
 optimizer = optimizers.RiemannianAdam(model.parameters(), lr=args.lr, weight_decay=args.decay)
 
 
-lrs = [5e-4]
+lrs = [args.lr]
 
 for epoch in tqdm(range(args.num_epochs)):
     print("start_time: ", start_time)
